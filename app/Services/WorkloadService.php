@@ -30,41 +30,41 @@ class WorkloadService
         Mail::to($recipient)->queue($toSend);
     }
 
-    public function updateBookingStatus(Booking $booking, User $employee, int $newWorkloadStatus)
-    {
-        $currentStatus = $booking->deliverable_status;
-        $newBookingStatus = $currentStatus;
+    // public function updateBookingStatus(Booking $booking, User $employee, int $newWorkloadStatus)
+    // {
+    //     $currentStatus = $booking->deliverable_status;
+    //     $newBookingStatus = $currentStatus;
 
-        $employeeType = $employee->employee->employee_type;
+    //     $employeeType = $employee->employee->employee_type;
 
-        if ($employeeType === User::PHOTOGRAPHER_TYPE) {
-            if ($newWorkloadStatus === Booking::STATUS_UPLOADED) {
-                $newBookingStatus = Booking::STATUS_UPLOADED;
-            }
-        }
+    //     if ($employeeType === User::PHOTOGRAPHER_TYPE) {
+    //         if ($newWorkloadStatus === Booking::STATUS_UPLOADED) {
+    //             $newBookingStatus = Booking::STATUS_UPLOADED;
+    //         }
+    //     }
 
-        if ($employeeType === User::EDITOR_TYPE) {
-            if ($newWorkloadStatus === Booking::STATUS_EDITING) {
-                $newBookingStatus = Booking::STATUS_EDITING;
-            } elseif ($newWorkloadStatus === Booking::STATUS_FOR_RELEASE) {
+    //     if ($employeeType === User::EDITOR_TYPE) {
+    //         if ($newWorkloadStatus === Booking::STATUS_EDITING) {
+    //             $newBookingStatus = Booking::STATUS_EDITING;
+    //         } elseif ($newWorkloadStatus === Booking::STATUS_FOR_RELEASE) { 
 
-                $editorStatuses = $this->getEditorStatuses($booking);
+    //             $editorStatuses = $this->getEditorStatuses($booking);
 
-                if ($editorStatuses->every(fn($status) => $status == Booking::STATUS_FOR_RELEASE)) {
-                    $newBookingStatus = Booking::STATUS_FOR_RELEASE;
-                } else {
-                    $newBookingStatus = Booking::STATUS_EDITING;
-                }
-            }
-        }
+    //             if ($editorStatuses->every(fn($status) => $status == Booking::STATUS_FOR_RELEASE)) {
+    //                 $newBookingStatus = Booking::STATUS_FOR_RELEASE;
+    //             } else {
+    //                 $newBookingStatus = Booking::STATUS_EDITING;
+    //             }
+    //         }
+    //     }
 
-        if ($newBookingStatus !== $currentStatus) {
-            $booking->deliverable_status = $newBookingStatus;
-            $booking->save();
+    //     if ($newBookingStatus !== $currentStatus) {
+    //         $booking->deliverable_status = $newBookingStatus;
+    //         $booking->save();
 
-            $this->notifyStatusChange($booking, $currentStatus, $newBookingStatus, $employee->full_name);
-        }
-    }
+    //         $this->notifyStatusChange($booking, $currentStatus, $newBookingStatus, $employee->full_name);
+    //     }
+    // }
 
     private function getEditorStatuses(Booking $booking)
     {
@@ -77,7 +77,7 @@ class WorkloadService
             ->pluck('pivot.workload_status');
     }
 
-    private function notifyStatusChange(Booking $booking, int $oldStatus, int $newStatus, string $employeeName)
+    public function notifyStatusChange(Booking $booking, int $oldStatus, int $newStatus, string $employeeName)
     {
         $formatStatus = Booking::DELIVERABLE_STATUS[$newStatus];
 
