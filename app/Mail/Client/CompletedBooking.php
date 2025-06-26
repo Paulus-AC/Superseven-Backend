@@ -22,6 +22,7 @@ class CompletedBooking extends Mailable
     private string $packageName;
     private string $addOns;
     private string $bookingDate;
+    private string $ceremonyTime;
     private string $bookingAddress;
     private int $status;
     private string $receipient;
@@ -37,6 +38,7 @@ class CompletedBooking extends Mailable
         $this->packageName = $booking->package ? $booking->package->package_name : null;
         $this->addOns = $booking->addOns ? $booking->addOns->pluck('add_on_name')->implode(', ') : null;
         $this->bookingDate = $booking->booking_date;
+        $this->ceremonyTime = $booking->ceremony_time;
         $this->bookingAddress = $booking->booking_address;
         $this->status = $booking->booking_status;
         $this->receipient = $booking->customer ? $booking->customer->first_name : null;
@@ -82,6 +84,7 @@ class CompletedBooking extends Mailable
             'package_name' => $this->packageName,
             'add_ons' => $this->addOns,
             'booking_date' => Carbon::parse($this->bookingDate)->format('F d, Y'),
+            'ceremony_time' => Carbon::parse($this->ceremonyTime)->format('h:i A'),
             'booking_address' => $this->bookingAddress,
             'status' => Booking::STATUS[$this->status],
             'link' => [

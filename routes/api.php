@@ -76,6 +76,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //Bookings
     Route::prefix('/bookings')->group(function () {
         Route::get('/', [BookingController::class, 'getBookings']);
+        Route::get('/approved', [BookingController::class, 'getApprovedBookings']);
         Route::post('/add', [BookingController::class, 'addBooking']);
         Route::get('/packages', [BookingController::class, 'getAvailablePackages']);
 

@@ -22,6 +22,7 @@ class CancelledBooking extends Mailable
     private string $packageName;
     private string $addOns;
     private string $bookingDate;
+    private string $ceremonyTime;
     private string $cancelledBy;
     private string $cancelledAt;
 
@@ -37,6 +38,7 @@ class CancelledBooking extends Mailable
         $this->packageName = $booking->package ? $booking->package->package_name : null;
         $this->addOns = $booking->addOns ? $booking->addOns->pluck('add_on_name')->implode(', ') : null;
         $this->bookingDate = $booking->booking_date;
+        $this->ceremonyTime = $booking->ceremony_time;
         $this->cancelledBy = $booking->deleted_by;
         $this->cancelledAt = $booking->deleted_at;
     }
@@ -81,6 +83,7 @@ class CancelledBooking extends Mailable
             'package_name' => $this->packageName,
             'add_ons' => $this->addOns,
             'booking_date' => Carbon::parse($this->bookingDate)->format('F d, Y'),
+            'ceremony_time' => Carbon::parse($this->ceremonyTime)->format('h:i A'),
             'cancelled_by' => $this->cancelledBy,
             'cancelled_at' => Carbon::parse($this->cancelledAt)->format('F d, Y h:i A'),
             'recipient' => $this->recipient

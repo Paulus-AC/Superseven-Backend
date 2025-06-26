@@ -10,6 +10,7 @@ Booking Details:
 * Package: **{{ $package_name }}**
 * Add On/s: **{{ $add_ons }}**
 * Booking Date: **{{ $booking_date }}**
+* Ceremony Time: **{{ $ceremony_time }}**
 * Booking Address: **{{ $booking_address }}**
 * Status: **{{ $status }}**
 

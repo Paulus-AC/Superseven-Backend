@@ -21,6 +21,7 @@ class CompletedReschedule extends Mailable
     private string $packageName;
     private string $addons;
     private string $bookingDate;
+    private string $ceremonyTime;
     private string $status;
     private string $receipient;
 
@@ -34,6 +35,7 @@ class CompletedReschedule extends Mailable
         $this->packageName = $booking->package ? $booking->package->package_name : null;
         $this->addons = $booking->addOns ? $booking->addOns->pluck('add_on_name')->implode(', ') : null;
         $this->bookingDate = $booking->booking_date;
+        $this->ceremonyTime = $booking->ceremony_time;
         $this->status = $booking->booking_status;
         $this->receipient = $booking->customer ? $booking->customer->first_name : null;
     }
@@ -77,6 +79,7 @@ class CompletedReschedule extends Mailable
             'package_name' => $this->packageName,
             'add_ons' => $this->addons,
             'new_date' => Carbon::parse($this->bookingDate)->format('F d, Y'),
+            'ceremony_time' => Carbon::parse($this->ceremonyTime)->format('h:i A'),
             'status' => Booking::STATUS[$this->status],
             'link' => [
                 'url' => config('app.frontend_url') . "customer/bookings/{$this->bookingId}",

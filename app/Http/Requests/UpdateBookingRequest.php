@@ -25,6 +25,7 @@ class UpdateBookingRequest extends FormRequest
     {
         return [
             'booking_date' => 'nullable|date|after_or_equal:+30 days',
+            'ceremony_time' => 'nullable|date_format:H:i',
             'event_name' => 'nullable|string|max:100',
             'package_id' => 'nullable|integer',
             'booking_address' => 'nullable|string|max:100',
@@ -36,6 +37,8 @@ class UpdateBookingRequest extends FormRequest
         return [
             'booking_date.date' => 'The booking date must be a valid date.',
             'booking_date.after_or_equal'=> 'The booking date must be at least 30 days from today.',
+            'ceremony_time.date_format' => 'The ceremony time must be in the format HH:MM.',
+            'event_name.string' => 'The event name must be a string.',
             'event_name.max' => 'The event name must not exceed 100 characters.',
             'booking_address.max' => 'The booking address must not exceed 100 characters.',
         ];
