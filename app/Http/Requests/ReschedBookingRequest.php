@@ -28,6 +28,7 @@ class ReschedBookingRequest extends FormRequest
                 'required',
                 // 'after_or_equal:' . today()->addDays(30)->toDateString()
             ],
+            'ceremony_time' => 'required|date_format:H:i',
         ];
     }
 
@@ -36,6 +37,8 @@ class ReschedBookingRequest extends FormRequest
         return [
             'booking_date.required'=> 'The booking date is required.',
             // 'booking_date.after_or_equal'=> 'The booking date must be at least 30 days from today.',
+            'ceremony_time.required'=> 'The ceremony time is required.',
+            'ceremony_time.date_format' => 'The ceremony time must be in the format HH:MM.',
         ];
     }
 

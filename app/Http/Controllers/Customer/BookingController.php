@@ -77,6 +77,7 @@ class BookingController extends BaseController
             $booking = Booking::create([
                 'customer_id' => $user->id,
                 'booking_date' => $validated['booking_date'],
+                'ceremony_time' => $validated['ceremony_time'],
                 'package_id' => $validated['package_id'],
                 'event_name' => $validated['event_name'],
                 'booking_address' => $validated['booking_address'],
@@ -125,6 +126,7 @@ class BookingController extends BaseController
         try {
 
             $booking->booking_date = $validated['booking_date'];
+            $booking->ceremony_time = $validated['ceremony_time'];
             $booking->event_name = $validated['event_name'];
             $booking->booking_address = $validated['booking_address'];
             $booking->package_id = $validated['package_id'];

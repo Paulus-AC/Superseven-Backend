@@ -74,6 +74,7 @@ class BookingController extends BaseController
             // create booking
             $booking = Booking::create([
                 'booking_date' => $request->booking_date,
+                'ceremony_time' => $request->ceremony_time,
                 'customer_id' => $customer->id,
                 'package_id' => $request->package_id,
                 'event_name' => $request->event_name,
@@ -130,6 +131,7 @@ class BookingController extends BaseController
             // Update basic fields
             $booking->fill([
                 'booking_date' => $request->booking_date,
+                'ceremony_time' => $request->ceremony_time,
                 'event_name' => $request->event_name,
                 'booking_address' => $request->booking_address,
             ]);
@@ -274,6 +276,7 @@ class BookingController extends BaseController
         try {
 
             $booking->booking_date = $validated['booking_date'];
+            $booking->ceremony_time = $validated['ceremony_time'];
             $booking->booking_status = Booking::STATUS_APPROVED;
             $booking->save();
 

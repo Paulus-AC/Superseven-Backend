@@ -29,6 +29,7 @@ class CreateBookingRequest extends FormRequest
                 'required',
                 'after_or_equal:' . today()->addDays(30)->toDateString()
             ],
+            'ceremony_time' => 'required|date_format:H:i',
             'event_name' => 'required|string|max:100',
             'package_id' => 'required|integer',
             'booking_address' => 'required|string|max:100',
@@ -40,6 +41,8 @@ class CreateBookingRequest extends FormRequest
         return [
             'booking_date.required'=> 'The booking date is required.',
             'booking_date.after_or_equal'=> 'The booking date must be at least 30 days from today.',
+            'ceremony_time.date_format' => 'The ceremony time must be in the format HH:MM.',
+            'ceremony_time.required' => 'The ceremony time is required.',
             'event_name.required' => 'The event name is required.',
             'event_name.max' => 'The event name must not exceed 100 characters.',
             'package_id.required' => 'The package ID is required.',
