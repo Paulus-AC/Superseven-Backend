@@ -58,6 +58,17 @@ class BookingController extends BaseController
         return $this->sendResponse('Booking retrieved successfully.', new BookingResource($booking));
     }
 
+    public function getApprovedBookings()
+    {
+        $bookings = Booking::with('customer', 'package', 'addOns')
+            ->where('booking_status', Booking::STATUS_APPROVED)
+            ->orderBy('booking_date')
+            ->orderBy('created_at')
+            ->get();
+
+        return $this->sendResponse('Bookings retrieved successfully.',  BookingResource::collection($bookings));
+    }
+
     public function addBooking(AddBookingRequest $request)
     {
         $request->validated();
