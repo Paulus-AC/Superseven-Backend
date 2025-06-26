@@ -9,6 +9,7 @@ A new booking has been created on your platform. Here are the details:
 * Package: **{{ $package_name }}**
 * Add On/s: **{{ $add_ons }}**
 * Booking Date: **{{ $booking_date }}**
+* Ceremony Time: **{{ $ceremony_time }}**
 * Booking Address: **{{ $booking_address }}**
 * Status: **{{ $status }}**
 

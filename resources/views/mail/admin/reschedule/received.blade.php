@@ -9,6 +9,7 @@ Updated Booking Details:
 * Package: **{{ $package_name }}**
 * Add On/s: **{{ $add_ons }}**
 * New Booking Date: **{{ $new_date }}**
+* Ceremony Time: **{{ $ceremony_time }}**
 
 <x-mail::button :url="''">
 View Booking Details
