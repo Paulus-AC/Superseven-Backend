@@ -61,6 +61,7 @@ class Booking extends Model
         'customer_id',
         'package_id',
         'booking_date',
+        'ceremony_time',
         'event_name',
         'booking_address',
         'booking_status',
