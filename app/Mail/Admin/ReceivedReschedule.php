@@ -22,6 +22,7 @@ class ReceivedReschedule extends Mailable
     private string $packageName;
     private string $addOns;
     private string $newDate;
+    private string $ceremonyTime;
     private string $receipient;
 
     /**
@@ -35,6 +36,7 @@ class ReceivedReschedule extends Mailable
         $this->packageName = $booking->package ? $booking->package->package_name : null;
         $this->addOns = $booking->addOns ? $booking->addOns->pluck('add_on_name')->implode(', ') : null;
         $this->newDate = $booking->booking_date;
+        $this->ceremonyTime = $booking->ceremony_time;
         $this->receipient = $receipient;
     }
 
@@ -78,6 +80,7 @@ class ReceivedReschedule extends Mailable
             'package_name' => $this->packageName,
             'add_ons' => $this->addOns,
             'new_date' => Carbon::parse($this->newDate)->format('F d, Y'),
+            'ceremony_time' => Carbon::parse($this->ceremonyTime)->format('h:i A'),
             'link' => [
                 'url' => config('app.frontend_url') . "/bookings/{$this->bookingId}",
             ],
