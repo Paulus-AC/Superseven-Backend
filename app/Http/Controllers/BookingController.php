@@ -186,8 +186,7 @@ class BookingController extends BaseController
 
     public function deleteBooking(int $bookingId)
     {
-        $booking = Booking::where('id', $bookingId)
-            ->where('booking_status', Booking::STATUS_PENDING)->first();
+        $booking = Booking::where('id', $bookingId)->first();
 
         if (!$booking) {
             return $this->sendError('Booking not found.', 404);

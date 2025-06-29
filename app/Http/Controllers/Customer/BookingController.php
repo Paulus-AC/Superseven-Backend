@@ -174,7 +174,6 @@ class BookingController extends BaseController
 
         $booking = Booking::where('id', $bookingId)
             ->where('customer_id', $user->id)
-            ->where('booking_status', Booking::STATUS_PENDING)
             ->first();
 
         if (!$booking) {
