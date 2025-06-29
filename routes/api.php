@@ -84,7 +84,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/', [BookingController::class, 'viewBooking']);
             Route::get('/addons', [BookingController::class, 'getAvailableAddons']);
             Route::post('/update', [BookingController::class, 'updateBooking']);
-            Route::post('/delete', [BookingController::class, 'deleteBooking']);
+            Route::post('/cancel', [BookingController::class, 'cancelBooking']);
             Route::post('/approve', [BookingController::class, 'setBookingToApprove']);
             Route::post('/reject', [BookingController::class, 'setBookingToReject']);
             Route::post('/reschedule', [BookingController::class, 'rescheduleBooking']);
@@ -141,7 +141,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             Route::get('/', [CustomerBookingController::class, 'getBookings']);
             Route::post('/create', [CustomerBookingController::class, 'createBooking']);
             Route::post('/{id}/update', [CustomerBookingController::class, 'updateBooking']);
-            Route::post('/{id}/delete', [CustomerBookingController::class, 'deleteBooking']);
+            Route::post('/{id}/cancel', [CustomerBookingController::class, 'cancelBooking']);
 
             Route::prefix('/{id}')->group(function () {
                 Route::get('/', [CustomerBookingController::class, 'viewBooking']);

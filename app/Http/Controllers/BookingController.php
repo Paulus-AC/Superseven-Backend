@@ -184,7 +184,7 @@ class BookingController extends BaseController
         }
     }
 
-    public function deleteBooking(int $bookingId)
+    public function cancelBooking(int $bookingId)
     {
         $booking = Booking::where('id', $bookingId)->first();
 

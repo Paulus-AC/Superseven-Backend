@@ -168,7 +168,7 @@ class BookingController extends BaseController
     }
 
 
-    public function deleteBooking(int $bookingId)
+    public function cancelBooking(int $bookingId)
     {
         $user = auth()->user();
 
