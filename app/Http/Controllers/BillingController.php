@@ -89,21 +89,6 @@ class BillingController extends BaseController
             $newStatus = $this->calculateBillingStatus($totalAmount, $paidAmount + $currentPayment);
             $billing->update(['billing_status' => $newStatus]);
 
-            // Handle booking status updates
-            if ($isFirstPayment) {
-                $booking = $billing->booking;
-
-                // Update current booking to approved
-                $booking->update(['booking_status' => Booking::STATUS_APPROVED]);
-
-                // Mark conflicting bookings for reschedule
-                Booking::where('booking_date', $booking->booking_date)
-                    ->where('id', '!=', $booking->id)
-                    ->where('booking_status', '!=', Booking::STATUS_REJECTED)
-                    ->where('booking_status', '!=', Booking::STATUS_FOR_RESCHEDULE)
-                    ->update(['booking_status' => Booking::STATUS_FOR_RESCHEDULE]);
-            }
-
             DB::commit();
             return $this->sendResponse('Payment created successfully.', TransactionResource::collection(
                 Payment::where('billing_id', $billingId)
