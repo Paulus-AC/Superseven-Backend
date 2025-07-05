@@ -72,9 +72,6 @@ class BillingController extends BaseController
             $currentPayment = $validated['amount'];
             $newBalance = max(0, $totalAmount - ($paidAmount + $currentPayment));
 
-            // Determine if this is the first payment
-            $isFirstPayment = ($paidAmount == 0);
-
             // Create payment record
             $payment = Payment::create([
                 'billing_id' => $billingId,
