@@ -61,7 +61,7 @@ class BillingController extends BaseController
             ->first();
 
         if (!$billing) {
-            return $this->sendError('Billing not found.', 404);
+            return $this->sendError('Billing not found or already paid.', 404);
         }
 
         DB::beginTransaction();
