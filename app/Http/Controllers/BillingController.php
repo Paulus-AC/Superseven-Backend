@@ -56,7 +56,9 @@ class BillingController extends BaseController
     public function addPayment(int $billingId, PaymentRequest $request)
     {
         $validated = $request->validated();
-        $billing = Billing::find($billingId);
+        $billing = Billing::where('id', $billingId)
+            ->where('billing_status', '!=', Billing::STATUS_PAID)
+            ->first();
 
         if (!$billing) {
             return $this->sendError('Billing not found.', 404);
