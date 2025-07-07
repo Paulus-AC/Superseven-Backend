@@ -72,6 +72,9 @@ class BillingController extends BaseController
             $currentPayment = $validated['amount'];
             $newBalance = max(0, $totalAmount - ($paidAmount + $currentPayment));
 
+            // Determine if this is the first payment
+            $isFirstPayment = ($paidAmount == 0);
+
             // Create payment record
             $payment = Payment::create([
                 'billing_id' => $billingId,
@@ -85,6 +88,21 @@ class BillingController extends BaseController
             // Update billing status
             $newStatus = $this->calculateBillingStatus($totalAmount, $paidAmount + $currentPayment);
             $billing->update(['billing_status' => $newStatus]);
+
+            // Handle booking status updates
+            if ($isFirstPayment) {
+                $booking = $billing->booking;
+
+                // Update current booking to approved
+                $booking->update(['booking_status' => Booking::STATUS_APPROVED]);
+
+                // Mark conflicting bookings for reschedule
+                Booking::where('booking_date', $booking->booking_date)
+                    ->where('id', '!=', $booking->id)
+                    ->where('booking_status', '!=', Booking::STATUS_REJECTED)
+                    ->where('booking_status', '!=', Booking::STATUS_FOR_RESCHEDULE)
+                    ->update(['booking_status' => Booking::STATUS_FOR_RESCHEDULE]);
+            }
 
             DB::commit();
             return $this->sendResponse('Payment created successfully.', TransactionResource::collection(
