@@ -89,7 +89,7 @@ class CustomerAccountController extends BaseController
 
     public function updateUser(int $id, UpdateAccountRequest $request)
     {
-        $request->validated();
+        $validated = $request->validated();
 
         $user = User::has('customer')->find($id);
 
@@ -101,13 +101,13 @@ class CustomerAccountController extends BaseController
         try {
 
             $user->update([
-                'first_name' => $request->first_name,
-                'mid_name' => $request->mid_name,
-                'last_name' => $request->last_name,
-                'email' => $request->email,
-                'contact_num' => $request->contact_no,
-                'address' => $request->address,
-                'status' => $request->status ? User::STATUS_ACTIVE : User::STATUS_INACTIVE,
+                'first_name' => $validated['first_name'],
+                'mid_name' => $validated['mid_name'],
+                'last_name' => $validated['last_name'],
+                'email' => $validated['email'],
+                'contact_num' => $validated['contact_no'],
+                'address' => $validated['address'],
+                'status' => $validated['status'] ? User::STATUS_ACTIVE : User::STATUS_INACTIVE,
             ]);
 
             DB::commit();
