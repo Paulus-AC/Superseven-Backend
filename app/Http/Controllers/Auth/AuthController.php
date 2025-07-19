@@ -22,23 +22,23 @@ class AuthController extends BaseController
      */
     public function register(RegisterFormRequest $request)
     {
-        $request->validated();
+        $validated = $request->validated();
 
         // Create the user
         $user = User::create([
-            'first_name' => $request->first_name,
-            'mid_name' => $request->mid_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'contact_num' => $request->contact_no,
-            'address' => $request->address,
+            'first_name' => $validated['first_name'],
+            'mid_name' => $validated['mid_name'],
+            'last_name' => $validated['last_name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'contact_num' => $validated['contact_no'],
+            'address' => $validated['address'],
         ]);
 
         // Create the customer record
         Customer::create([
             'user_id' => $user->id,
-            'customer_type' => $request->customer_type,
+            'customer_type' => $validated['customer_type'],
         ]);
 
         return $this->sendResponse('User registered successfully.', new UserResource($user));
