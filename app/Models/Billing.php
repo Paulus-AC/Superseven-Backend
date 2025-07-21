@@ -68,4 +68,11 @@ class Billing extends Model
             get: fn () => $this->payments()->sum('amount_paid')
         );
     }
+
+    public function totalDiscounted(): Attribute
+    {
+        return Attribute::make(
+        get: fn () => ($this->package_amount + $this->add_on_amount) - $this->total_amount
+    );
+    }
 }
