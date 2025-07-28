@@ -25,7 +25,7 @@ class UpdatePackageRequest extends FormRequest
     {
         return [
             'package_name' => 'nullable|string|max:30',
-            'package_details' => 'nullable|string|max:150',
+            'package_details' => 'required|string',
             'package_price' => 'nullable|numeric|min:0|max:999999.99',
             'image' => 'nullable|image|mimes:jpeg,png,jpg',
             'remove_image' => 'nullable', // Optional field to remove the image
