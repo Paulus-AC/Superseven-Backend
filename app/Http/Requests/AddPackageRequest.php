@@ -25,7 +25,7 @@ class AddPackageRequest extends FormRequest
     {
         return [
             'package_name' => 'required|string|max:30',
-            'package_details' => 'required|string|max:150',
+            'package_details' => 'required|string',
             'package_price' => 'required|numeric|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg', // Optional image validation
         ];
