@@ -10,12 +10,19 @@ use App\Http\Resources\TransactionResource;
 use App\Models\Billing;
 use App\Models\Booking;
 use App\Models\Payment;
+use App\Services\BillingService;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BillingController extends BaseController
 {
+    private BillingService $billingService;
+
+    public function __construct(BillingService $billingService)
+    {
+        $this->billingService = $billingService;
+    }
+
     public function getBillings(PaginateRequest $request)
     {
         $startYear = $request->start_year;
@@ -25,6 +32,11 @@ class BillingController extends BaseController
             ->when(isset($request->search), function ($query) use ($request) {
                 $query->where(function ($query) use ($request) {
                     $this->searchCallback($query, $request, ['event_name', 'customer.first_name', 'customer.last_name', 'package.package_name']);
+                });
+            })
+            ->when(isset($request->filters), function ($query) use ($request) {
+                $query->where(function ($subquery) use ($request) {
+                    $this->filterCallback($subquery, $request, $this->billingService->getFilterBillingData());
                 });
             })
             ->whereYear('booking_date', '>=', $startYear)
