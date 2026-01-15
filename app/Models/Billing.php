@@ -34,6 +34,7 @@ class Billing extends Model
         'package_amount',
         'add_on_amount',
         'total_amount',
+        'balance',
         'billing_status',
     ];
 
@@ -72,7 +73,14 @@ class Billing extends Model
     public function totalDiscounted(): Attribute
     {
         return Attribute::make(
-        get: fn () => ($this->package_amount + $this->add_on_amount) - $this->total_amount
-    );
+            get: fn () => ($this->package_amount + $this->add_on_amount) - $this->total_amount
+        );
+    }
+
+    public function statusLabel(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => self::STATUS[$this->billing_status] ?? ''
+        );
     }
 }
