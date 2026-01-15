@@ -44,7 +44,8 @@ class BillingController extends BaseController
             ->where('booking_status', '!=', Booking::STATUS_REJECTED)
             ->orderBy(Billing::select('billing_status')
                 ->whereColumn('booking_id', 'bookings.id')
-                ->limit(1));
+                ->limit(1))
+            ->orderBy('booking_date', 'asc');
 
         $paginated = $billings->paginate(self::PER_PAGE);
 

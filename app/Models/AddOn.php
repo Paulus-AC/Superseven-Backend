@@ -32,6 +32,6 @@ class AddOn extends Model
     */
     public function bookings(): BelongsToMany
     {
-        return $this->belongsToMany(Booking::class, 'availed_package')->using(AvailedAddon::class);
+        return $this->belongsToMany(Booking::class, 'availed_addon')->using(AvailedAddon::class);
     }
 }

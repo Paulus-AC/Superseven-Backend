@@ -155,4 +155,32 @@ class Booking extends Model
             return $this->feedback()->exists();
         });
     }
+
+    public function hasFullPayment(): Attribute
+    {
+        return Attribute::make(function () {
+            return $this->billing && $this->billing->billing_status === Billing::STATUS_PAID;
+        });
+    }
+
+    public function bookedStatus(): Attribute
+    {
+        return Attribute::make(function () {
+            return self::STATUS[$this->booking_status] ?? '';
+        });
+    }
+
+    public function workloadStatus(): Attribute
+    {
+        return Attribute::make(function () {
+            return self::DELIVERABLE_STATUS[$this->deliverable_status] ?? '';
+        });
+    }
+
+    public function eventCategory(): Attribute
+    {
+        return Attribute::make(function () {
+            return self::EVENT_CATEGORIES[$this->category] ?? '';
+        });
+    }
 }

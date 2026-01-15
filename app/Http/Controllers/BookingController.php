@@ -147,7 +147,7 @@ class BookingController extends BaseController
                 'ceremony_time' => $request->ceremony_time,
                 'event_name' => $request->event_name,
                 'booking_address' => $request->booking_address,
-                'category' => $request->category,
+                'category' => $request->category ?? $booking->category,
             ]);
 
             // Check for discount changes
