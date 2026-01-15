@@ -31,7 +31,7 @@ class GenerateReportController extends BaseController
 
 
         // generate pdf
-        $fileName = 'test.pdf'; // $this->generateFileName();
+        $fileName = $this->generateFileName();
         $filePath = storage_path(self::FILE_PATH . $fileName);
 
         // render template with data
@@ -103,7 +103,6 @@ class GenerateReportController extends BaseController
     {
         $timestamp = now()->format('Ymd_His');
         $randomString = Str::random(8);
-        // return "report_{$timestamp}_{$randomString}." . self::FILE_TYPE;
-        return 'test.pdf';
+        return "report_{$timestamp}_{$randomString}." . self::FILE_TYPE;
     }
 }
