@@ -7,6 +7,9 @@
             <div class="bg-white p-6 rounded-lg shadow">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-xl font-semibold">Number of Bookings</h2>
+                    <div class="flex items-center space-x-4">
+                        <h3 class="text-lg font-semibold">{{ $start_month_year }} to {{ $end_month_year }}</h3>
+                </div>
                 </div>
                 <canvas id="bookingsChart" height="100"></canvas>
             </div>
